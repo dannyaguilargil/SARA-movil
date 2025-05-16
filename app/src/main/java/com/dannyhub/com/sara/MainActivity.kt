@@ -31,6 +31,7 @@ import com.dannyhub.com.sara.ui.theme.SaraTheme
 import com.dannyhub.com.sara.ui.theme.GreenImsalud
 import com.dannyhub.com.sara.footer.AppFooter
 import com.dannyhub.com.sara.usuarios.PasswordResetScreen
+import com.dannyhub.com.sara.base.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +50,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("reset_password") {
                         PasswordResetScreen()
+                    }
+                    composable("home") {
+                        HomeScreen()
                     }
                 }
             }
@@ -123,19 +127,25 @@ fun LoginScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            //aprtado de credenciales
             Button(
                 onClick = {
-                    Toast.makeText(
-                        context,
-                        "Usuario: $username, Contraseña: $password",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    if (username == "admin" && password == "1234") {
+                        navController.navigate("home")
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Credenciales incorrectas",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = GreenImsalud)
             ) {
                 Text("Iniciar sesión", color = Color.White)
             }
+
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -165,6 +175,7 @@ fun LoginScreen(navController: NavHostController) {
                     navController.navigate("reset_password")
                 }
             )
+
 
             Spacer(modifier = Modifier.height(24.dp))
 
